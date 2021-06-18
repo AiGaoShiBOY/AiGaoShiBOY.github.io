@@ -28,7 +28,6 @@ initInput();
 showContent("z")
 
 function initInput(){
-    console.log('1');
     document.getElementById("inputtitle").innerHTML = "<i class=\"fa fa-smile-o\"></i> 添加一条事项或纪念时刻";
     document.getElementById("info").style.display = "block";
     document.getElementsByClassName("submitBtn")[0].style.display="block";
@@ -51,6 +50,7 @@ function showContents(){
 }
 
 function closeDialog(){
+    console.log('1');
     document.getElementsByClassName('content-container')[0].style.visibility = 'hidden';
     document.getElementsByClassName('content-container')[0].style.opacity = 0;
     document.getElementsByClassName('content-container')[0].style.height = '0px';

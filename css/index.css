@@ -104,23 +104,26 @@ body {
 }
 
 .content-container{
-  display: fixed;
-  margin: 0;
+  position: fixed;
   width: 100%;
-  min-width: 1024px;
-  z-index:5;
+  z-index:9999;
   top:48px;
   background: rgba(0,0,0,0.92);
   color:rgba(255, 255, 255, 0.8);
-  height: 0;
+  height: 500px;
   visibility: hidden;
   opacity: 0;
   transition: height 0.6s ease-out, opacity 0.5s ease-in, visibility 0.5s ease-in;
   box-shadow: 0 4px 8px 0 gray;
 }
 
+.content-ul{
+  padding: 0;
+}
+
 .content-item{
-  width: 295px;
+  width: 70%;
+  margin-left: 15%;
   height: 44px;
   list-style: none;
   line-height: 300%;
@@ -129,13 +132,6 @@ body {
 
 .content-item:hover{
   color: white;
-}
-
-.dialog1{
-   visibility: hidden;
-   position:fixed;
-   top: 48px;
-   z-index: 88888;
 }
 
 .input-div{
@@ -277,14 +273,13 @@ select{
 .operate-button{
   text-align: center;
   float: right;
-  margin-top: 5px;
-  
+  margin-top: 5px;  
   background-color:white;
   height: 40px;
   width: 40px;
   border-radius: 5px;
   color:black;
-  line-height: 210%;
+  line-height: 40px;
   border: none;
   font-size: 20px;
 }
