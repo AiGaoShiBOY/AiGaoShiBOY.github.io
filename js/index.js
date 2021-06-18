@@ -202,7 +202,7 @@ function post_data(){
         "time": datetime.value.substring(11,16),
         "tag":tag.value,
     }
-    var flag = Date.parse(todo.date+' '+todo.time)-new Date().getTime();
+    var flag = Date.parse((todo.date+' '+todo.time).replace(/-/g, '/'))-new Date().getTime();
     if(flag>0){
         showHint("成功添加了一条代办事项！",1);
     }
@@ -232,7 +232,7 @@ function saveData(data){
 //根据时间排序
 function sortTime(data){
     data.sort((a,b)=>{
-        return Date.parse(a.date+' '+a.time)-Date.parse(b.date+' '+b.time)
+        return Date.parse((a.date+' '+a.time).replace(/-/g, '/'))-Date.parse((b.date+' '+b.time).eplace(/-/g, '/'))
     })
 }
 
@@ -302,10 +302,10 @@ function renderAllTodo(){
         'ficount4':0,
     }
     for(let i = 0;i<data.length;i++){
-        var flag = Date.parse(data[i].date+' '+data[i].time)-new Date().getTime();
+        var flag = Date.parse((data[i].date+' '+data[i].time).replace(/-/g, '/'))-new Date().getTime();
         //阈值为2min
         if(data[i].done==0&&flag>=0){
-            var gap = Date.parse(data[i].date+' '+data[i].time)-new Date().getTime();
+            var gap = Date.parse((data[i].date+' '+data[i].time).replace(/-/g, '/'))-new Date().getTime();
             var day = parseInt(gap/(24*60*60*1000));
             gap = gap - day*(24*60*60*1000);
             var h = parseInt(gap/(60*60*1000));
@@ -327,7 +327,7 @@ function renderAllTodo(){
             todoHtmlcount++;
         }
         if(data[i].done==0&&data[i].date == now&&flag>=0){
-            var gap = Date.parse(data[i].date+' '+data[i].time)-new Date().getTime();
+            var gap = Date.parse((data[i].date+' '+data[i].time).replace(/-/g, '/'))-new Date().getTime();
             var day = parseInt(gap/(24*60*60*1000));
             gap = gap - day*(24*60*60*1000);
             var h = parseInt(gap/(60*60*1000));
@@ -376,7 +376,7 @@ function renderAllTodo(){
             outdateHtmlcount++;
         }
         if(data[i].done==0&&data[i].tag!=0){
-            var gap = Date.parse(data[i].date+' '+data[i].time)-new Date().getTime();
+            var gap = Date.parse((data[i].date+' '+data[i].time).replace(/-/g, '/'))-new Date().getTime();
             var day = parseInt(gap/(24*60*60*1000));
             gap = gap - day*(24*60*60*1000);
             var h = parseInt(gap/(60*60*1000));
@@ -411,7 +411,7 @@ function renderAllTodo(){
             dic1['ficount'+data[i].tag]++;
         }
         if(data[i].done==3){
-            var gap = new Date().getTime()-Date.parse(data[i].date+' '+data[i].time);
+            var gap = new Date().getTime()-Date.parse((data[i].date+' '+data[i].time).replace(/-/g, '/'));
             var day = parseInt(gap/(24*60*60*1000));
             gap = gap - day*(24*60*60*1000);
             var h = parseInt(gap/(60*60*1000));
@@ -447,7 +447,7 @@ function renderAllTodo(){
 
         }
         if(data[i].done==3&&data[i].tag!=0){
-            var gap = new Date().getTime()-Date.parse(data[i].date+' '+data[i].time);
+            var gap = new Date().getTime()-Date.parse((data[i].date+' '+data[i].time).replace(/-/g, '/'));
             var day = parseInt(gap/(24*60*60*1000));
             gap = gap - day*(24*60*60*1000);
             var h = parseInt(gap/(60*60*1000));
