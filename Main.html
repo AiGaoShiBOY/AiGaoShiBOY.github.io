@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- http-equiv指定文档的内容类型和编码类型 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- name属性 视图和描述 name+content -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Mr.Time--你的时间管家</title>
+    <meta http-equiv=Cache-Control content=no-cache /> 
+    <!-- 外接式css -->
+    <!--font awesome-->
+    <link rel="stylesheet" href="./font-awesome-4.7-4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+
+</head>
+
+<body>
+    <div class="hint"><i class="fa fa-check"></i></div>
+    <nav class = "header">
+        <ul class="container">
+            <li class = "list-item left-item" style="float: left; "><a onclick="showContents()"><i class="fa fa-navicon"></i></a></li>
+            <li class = "list-item left-item" style="float: left;visibility: hidden;"><a onclick="closeDialog()"><i class="fa fa-close"></i></a></li>
+            <li class="list-item middle-item">Mr.Time</li>
+            <li class="list-item right-item" onclick="showInput()"><i class="fa fa-plus"></i></li>
+            <li class="list-item right-item" onclick="closeInput()" style="display: none;"><i class="fa fa-close"></i></li>
+        </ul>
+    </nav>
+    <!--左侧导航栏-->
+    <div class = "dialog1">
+        <ul class = "content-container">
+            <li class = "content-item" id = "#z" onclick ="showContent(this.id[1])"><a><i class="fa fa-eye fa-fw"></i>&nbsp;总览</a></li>
+            <li class = "content-item" id = "#0" onclick ="showContent(this.id[1])"><a><i class="fa fa-warning fa-fw danger"></i>&nbsp;紧急事件</a></li>
+            <li class = "content-item" id = "#1" onclick ="showContent(this.id[1])"><a><i class="fa fa-sticky-note fa-fw"></i>&nbsp;全部事件</a></li>
+            <li class = "content-item" id = "#2" onclick ="showContent(this.id[1])"><a><i class="fa fa-check fa-fw finish"></i>&nbsp;已完成</a></li>
+            <li class = "content-item" id = "#3" onclick ="showContent(this.id[1])"><a><i class="fa fa-calendar-times-o fa-fw outdate"></i>&nbsp;已过时</a></li>
+            <li class = "content-item" id = "#4" onclick ="showContent(this.id[1])"><a><i class="fa fa-star fa-fw outdate"></i>&nbsp;纪念时刻</a></li>
+            <li class = "content-item" id = "#5" onclick ="showContent(this.id[1])"><a><i class="fa fa-book fa-fw study"></i>&nbsp;学习</a></li>
+            <li class = "content-item" id = "#6" onclick ="showContent(this.id[1])"><a><i class="fa fa-briefcase fa-fw work"></i>&nbsp;工作</a></li>
+            <li class = "content-item" id = "#7" onclick ="showContent(this.id[1])"><a><i class="fa fa-soccer-ball-o fa-fw sport"></i>&nbsp;运动</a></li>
+            <li class = "content-item" id = "#8" onclick ="showContent(this.id[1])"><a><i class="fa fa-camera-retro fa-fw life"></i>&nbsp;生活</a></li>
+            
+        </ul>
+    </div>
+
+    <!--表单输入-->
+    <div class = "input-div">
+       <h1 id = "inputtitle" style="font-weight: normal; font-size: 20px;"><i class="fa fa-smile-o"></i> 添加一条事项或纪念时刻</h1>
+       <p id="info" style="font-size: 6px; color: rgb(35,103,197);">> 如果您选择了过去的时间，生成一条纪念时刻</br>> 如果您选择了未来的时间，生成一条代办事项</p>
+        <form action="javascript:post_data()" id="form">
+            <!-- required规定提交表单之前有必填字段  autocomplete:自动补齐-->
+            <input type="text" id="title" name="title" placeholder="设定一个小目标..." required="required"
+                autocomplete="off" />
+            <input type="datetime-local" id="datetime"  required="required"/>
+            <select id = "tag" required="required">
+                <option selected="selected" value = "0">没有标签</option>
+                <option value="1">学习</option>
+                <option value="2">工作</option>
+                <option value="3">运动</option>
+                <option value="4">生活</option>
+             </select>
+             <button  class = "submit submitBtn"><i class="fa fa-check"></i> 提交</button>
+             <button  class = "submitBtn" style="display: none;" onclick="edit_data(this.id)"><i class="fa fa-check"></i> 完成</button>
+        </form>
+    </div>
+
+    <div class="first-button" >
+        <button class="btn1 finishall" onclick="finishall()">完成全部事项</button>
+        <button class="btn1 deleteall" onclick="deleteall()">清除已完成</button>
+        <button class="btn1 outdateall" onclick="outdateall()">清除已过时</button>
+    </div>
+
+
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color: red"><i class="fa fa-warning fa-fw"></i> 最紧急 (<span id="ll1"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;">🔥 在今天之内完成它们</span></h1>
+        <div class = 'todolist' id='l1'>
+        </div>  
+    </div>  
+    
+    <div class="todo-block">
+        <h1 style = "margin-left:30px;"><i class="fa fa-sticky-note fa-fw"></i> 全部代办事项 (<span id="ll2"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;">🌝 别急，一步一步来</span></h1>
+        <div class = 'todolist' id='l2'>
+        </div>
+    </div>
+
+    
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color:seagreen"><i class="fa fa-check fa-fw"></i> 已完成 (<span id="ll3"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;">🏃 走过的路</span></h1>
+        <div class = 'todolist'id='l3'>
+        </div>
+    </div>
+
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color:grey"><i class="fa fa-calendar-times-o fa-fw"></i> 已经过时 (<span id="ll4"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;">💔 总有遗憾</span></h1>
+        <div class = 'todolist' id='l4'>
+        </div>
+    </div>
+
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color:orange"><i class="fa fa-star fa-fw"></i> 纪念时刻 (<span id="ll5"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;">✨ 那些值得铭记的</span></h1>
+        <div class = 'todolist' id='l5'>
+        </div>
+    </div>
+
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color:black"><i class="fa fa-book fa-fw"></i> 待完成的学习目标 (<span id="xx1"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist'id='x1'>
+        </div>
+        <h1 style = "margin-left:30px; color:seagreen"><i class="fa fa-check fa-fw"></i> 已完成的学习目标 (<span id="yy1"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist'id='y1'>
+        </div>
+        <h1 style = "margin-left:30px; color:grey"><i class="fa fa-calendar-times-o fa-fw"></i> 已经过时的学习目标 (<span id="zz1"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='z1'>
+        </div>
+        <h1 style = "margin-left:30px; color:orange"><i class="fa fa-calendar-times-o fa-fw"></i> 学习上的纪念时刻 (<span id="tt1"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='t1'>
+        </div>
+    </div>
+
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color:black"><i class="fa fa-briefcase fa-fw"></i> 待完成的工作 (<span id="xx2"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist'id='x2'>
+        </div>
+        <h1 style = "margin-left:30px; color:seagreen"><i class="fa fa-check fa-fw"></i> 已完成的工作 (<span id="yy2"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist'id='y2'>
+        </div>
+        <h1 style = "margin-left:30px; color:grey"><i class="fa fa-calendar-times-o fa-fw"></i> 已经过时的工作目标 (<span id="zz2"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='z2'>
+        </div>
+        <h1 style = "margin-left:30px; color:orange"><i class="fa fa-calendar-times-o fa-fw"></i> 工作上的纪念时刻 (<span id="tt2"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='t2'>
+        </div>
+    </div>
+
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color:black"><i class="fa fa-soccer-ball-o fa-fw"></i> 待完成的运动目标 (<span id="xx3"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='x3'>
+        </div>
+        <h1 style = "margin-left:30px; color:seagreen"><i class="fa fa-check fa-fw"></i> 已完成的运动目标 (<span id="yy3"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='y3'>
+        </div>
+        <h1 style = "margin-left:30px; color:grey"><i class="fa fa-calendar-times-o fa-fw"></i> 已经过时的运动目标 (<span id="zz3"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='z3'>
+        </div>
+        <h1 style = "margin-left:30px; color:orange"><i class="fa fa-calendar-times-o fa-fw"></i> 运动上的纪念时刻 (<span id="tt3"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='t3'>
+        </div>
+    </div>
+
+    <div class="todo-block">
+        <h1 style = "margin-left:30px; color:black"><i class="fa fa-camera-retro fa-fw"></i> 待完成的生活计划 (<span id="xx4"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='x4'>
+        </div>
+        <h1 style = "margin-left:30px; color:seagreen"><i class="fa fa-check fa-fw"></i> 已完成的生活计划 (<span id="yy4"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='y4'>
+        </div>
+        <h1 style = "margin-left:30px; color:grey"><i class="fa fa-calendar-times-o fa-fw"></i> 已经过时的生活目标 (<span id="zz4"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='z4'>
+        </div>
+        <h1 style = "margin-left:30px; color:orange"><i class="fa fa-calendar-times-o fa-fw"></i> 生活上的纪念时刻 (<span id="tt4"></span>)<span style="font-size: 10px; font-weight: normal; margin-left: 0.5cm;"></span></h1>
+        <div class = 'todolist' id='t4'>
+        </div>
+    </div>
+
+
+
+
+    <footer class="footer">
+        <p><i class="fa fa-flag" style="margin-top: 0.5cm;"></i> Designer: Li Yuanfeng</br>2021.6</p>
+        <p><div class="github"><a><i class="fa fa-github fa-lg"></i></a></div></p>
+        <p style="font-size:14px; color: gray;"><i class="fa fa-envelope"></i> 1852448@tongji.edu.cn<br/> <i class="fa fa-phone"></i> +8618817725936<br/><i class="fa fa-map-marker"></i> 上海, 同济大学</p>
+
+
+    </footer>
+
+    <script type="text/javascript" src="./js/index.js"></script>
+
+   
+
+</body>
+
+</html>
