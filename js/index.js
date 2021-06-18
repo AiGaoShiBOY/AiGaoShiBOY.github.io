@@ -232,7 +232,7 @@ function saveData(data){
 //根据时间排序
 function sortTime(data){
     data.sort((a,b)=>{
-        return Date.parse((a.date+' '+a.time).replace(/-/g, '/'))-Date.parse((b.date+' '+b.time).eplace(/-/g, '/'))
+        return Date.parse((a.date+' '+a.time).replace(/-/g, '/'))-Date.parse((b.date+' '+b.time).replace(/-/g, '/'))
     })
 }
 

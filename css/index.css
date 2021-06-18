@@ -108,7 +108,8 @@ body {
   margin: 0;
   width: 100%;
   min-width: 1024px;
-  z-index:8888;
+  z-index:5;
+  top:48px;
   background: rgba(0,0,0,0.92);
   color:rgba(255, 255, 255, 0.8);
   height: 0;
