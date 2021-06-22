@@ -395,7 +395,7 @@ function renderAllTodo(){
             "                <button class=\"operate-button close\" onclick = 'del(this)'><i class=\"fa fa-close fa-lg fa-fw\"></i></button>\n" +
             "            </div>\n" +
             "        </div>"
-            dic['todocount'+data[i].tag];
+            dic['todocount'+data[i].tag]++;
         }
         if(data[i].done==1&&data[i].tag!=0){
             dic1['fi'+data[i].tag] += "<div class=\"todoitem\" id=\"c"+i+"\">\n" +
@@ -474,15 +474,18 @@ function renderAllTodo(){
     setDom('l',3,finishHtml,finishHtmlcount);
     setDom('l',4,outdateHtml,outdateHtmlcount);
     setDom('l',5,remHtml,remHtmlcount);
+
+    console.log(dic)
+
     for(let i = 1;i<=4;i++){
         setDom('x',i,dic['todo'+i],dic['todocount'+i]);
         setDom('y',i,dic1['fi'+i],dic1['ficount'+i]);
         setDom('z',i,dic2['fi'+i],dic2['ficount'+i]);
         setDom('t',i,dic3['fi'+i],dic3['ficount'+i]);
     }
-    console.log(dic1);
     
 }
+
 
 function setDom(type,i,string,count){
     document.getElementById(type+i).innerHTML = string;
@@ -493,9 +496,18 @@ function setDom(type,i,string,count){
         '3':"👀 这里空空如也...</br> 快去完成任务吧！",
         '4':"👯‍♀️ 没有过时未完成的任务！",
         '5':"👀 这里空空如也...</br> 快去记录一些生活中的纪念时刻吧！",
+        'x':"🤩 没有代办事项!</br> 好好休息吧！",
+        'y':"👀 这里空空如也...</br> 快去完成任务吧！",
+        'z':"👯‍♀️ 没有过时未完成的任务！",
+        't':"👀 这里空空如也...</br> 快去记录一些生活中的纪念时刻吧！",
+
     }
-    if(count ==0){
-        document.getElementById(type+i).innerHTML = "<div class = 'emptydiv'>"+stringdic[i]+"</div>"
+    if(count == 0){
+        if(type=='l'){
+            document.getElementById(type+i).innerHTML = "<div class = 'emptydiv'>"+stringdic[i]+"</div>"
+        }else{
+            document.getElementById(type+i).innerHTML = "<div class = 'emptydiv'>"+stringdic[type]+"</div>"
+        }
     }
 }
 
@@ -516,6 +528,7 @@ function showContent(i){
                 list[j].style.display = "none";
             }
         }
+        document.getElementsByClassName("footer")[0].style.display ='block';
         closeDialog();
         return;
     }
@@ -524,6 +537,7 @@ function showContent(i){
         list[j].style.display='none';
     }
     list[i].style.display = 'block';
+    document.getElementsByClassName("footer")[0].style.display ='none';
     closeDialog();
 }
 
