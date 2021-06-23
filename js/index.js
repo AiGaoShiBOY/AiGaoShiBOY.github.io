@@ -110,7 +110,7 @@ function hideHint(){
 
 function del(obj){
     let target = obj.parentNode.parentNode;
-    index = target.id[1];
+    index = target.id.substr(1);
     if(data[index].done==3){
         showHint("您成功删除了一个纪念时刻！",1);
     }else{
@@ -123,7 +123,7 @@ function del(obj){
 
 function finish(obj){
     let target = obj.parentNode.parentNode;
-    index = target.id[1];
+    index = target.id.substr(1);
     data[index].done = 1;
     data[index].date = new Date().Format("yyyy-MM-ddThh:mm").substring(0,10);
     data[index].time = new Date().Format("yyyy-MM-ddThh:mm").substring(11,16);
@@ -134,7 +134,7 @@ function finish(obj){
 
 function edit(obj){
     let target = obj.parentNode.parentNode;
-    index = target.id[1];
+    index = target.id.substr(1);
     document.getElementById("title").value = data[index].title;
     document.getElementById("datetime").value = data[index].date+'T'+data[index].time;
     document.getElementById("tag").value = data[index].tag;
@@ -142,29 +142,36 @@ function edit(obj){
     document.getElementById("info").style.display = "none";
     document.getElementsByClassName("submitBtn")[0].style.display="none";
     document.getElementsByClassName("submitBtn")[1].style.display="block";
-    document.getElementsByClassName("submitBtn")[1].id="bt"+index;
+    document.getElementsByClassName("submitBtn")[1].id="%"+index;
     showInput();
 } 
 
 function edit_data(id){
-    console.log(id);
-    i = id[2];
-    console.log(i);
+    i = id.substr(1);
     //获取名字
     var _title = document.getElementById("title");
     //获取时间表
     var _datetime = document.getElementById("datetime");
     var _tag = document.getElementById("tag");
+    var y = _datetime.value.substring(0,10);
+    var t = _datetime.value.substring(11,16);
+    var k = Date.parse((y+' '+t).replace(/-/g, '/'))-new Date().getTime();
+    console.log(k);
+    if(k<=0){
+        showHint("请选择未来的时间！",3);
+        return;
+    }
+    
     if (_title.value.trim() == "") {
         showHint("请填写代办事项！",2);
         return;
     } 
     if(_datetime.value.trim()==''){
         showHint("请选择截止时间！",2);
-        return
+        return;
     }
     if(_tag.value.trim() ==''){
-        alert("请选择一个标签！",2);
+        showHint("请选择一个标签！",2);
         return;
     }
     data[i].title = _title.value;
@@ -313,10 +320,10 @@ function renderAllTodo(){
             var m = parseInt(gap/(60*1000));
             todoHtml += "<div class=\"todoitem\" style='height:150px' id=\"a"+i+"\">\n" +
             "            <div class=\"firstline\"style=\"height: 55px;overflow: hidden;\">\n" +
-            "            <div class=\"todotitle\">"+data[i].title+"</div>\n" +
-            "            <div class=\"thetag tag"+data[i].tag+"\">"+taglist[data[i].tag]+"</i></div>\n" +
+           "            <div class=\"todotitle\" ondblclick='ShowElement(this)'>"+data[i].title+"</div>\n" +
+            "            <div class=\"thetag tag"+data[i].tag+"\" ondblclick='showTag(this)' draggable='true' ondragend='hidetag(this)' >"+taglist[data[i].tag]+"</i></div>\n" + 
             "            </div>\n" +
-            "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-clock-o\"></i>&nbsp;截止日期: &nbsp;<span style='font-weight:normal'>"+data[i].date +'&nbsp;' +data[i].time +"</span></div>\n" +
+            "            <div style='margin-left: 5%;font-weight: bold;' ondblclick='showDate(this)'><i class=\"fa fa-clock-o\"></i>&nbsp;截止日期: &nbsp;<span style='font-weight:normal'>"+data[i].date +'&nbsp;' +data[i].time +"</span></div>\n" +
             "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-warning\"></i>&nbsp;剩余时间: &nbsp;<span style='font-weight:normal'>"+day +' 天 ' + h+' 时 ' +m+' 分 ' +"</span></div>\n" +
             "            <div class=\"firstline\">\n" +
             "                <button class=\"operate-button edit\" onclick = 'edit(this)' style=\"margin-right:20px;\"><i class=\"fa fa-pencil fa-lg fa-fw\"></i></button>\n" +
@@ -335,8 +342,8 @@ function renderAllTodo(){
             var m = parseInt(gap/(60*1000));
             emHtml += "<div class=\"todoitem\" style='height:150px' id=\"a"+i+"\">\n" +
             "            <div class=\"firstline\"style=\"height: 55px;overflow: hidden;\">\n" +
-            "            <div class=\"todotitle\">"+data[i].title+"</div>\n" +
-            "            <div class=\"thetag tag"+data[i].tag+"\">"+taglist[data[i].tag]+"</i></div>\n" +
+            "            <div class=\"todotitle\" ondblclick='ShowElement(this)'>"+data[i].title+"</div>\n" +
+            "            <div class=\"thetag tag"+data[i].tag+"\" ondblclick='showTag(this)' draggable='true' ondragend='hidetag(this)' >"+taglist[data[i].tag]+"</i></div>\n" + 
             "            </div>\n" +
             "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-clock-o\"></i>&nbsp;截止日期: &nbsp;<span style='font-weight:normal'>"+data[i].date +'&nbsp;' +data[i].time +"</span></div>\n" +
             "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-warning\"></i>&nbsp;剩余时间: &nbsp;<span style='font-weight:normal'>"+day +' 天 ' + h+' 时 ' +m+' 分 ' +"</span></div>\n" +
@@ -384,8 +391,8 @@ function renderAllTodo(){
             var m = parseInt(gap/(60*1000));
             dic['todo'+data[i].tag] += "<div class=\"todoitem\" style='height:150px' id=\"a"+i+"\">\n" +
             "            <div class=\"firstline\"style=\"height: 55px;overflow: hidden;\">\n" +
-            "            <div class=\"todotitle\">"+data[i].title+"</div>\n" +
-            "            <div class=\"thetag tag"+data[i].tag+"\">"+taglist[data[i].tag]+"</i></div>\n" +
+            "            <div class=\"todotitle\" ondblclick='ShowElement(this)'>"+data[i].title+"</div>\n" +
+            "            <div class=\"thetag tag"+data[i].tag+"\" ondblclick='showTag(this)' draggable='true' ondragend='hidetag(this)' >"+taglist[data[i].tag]+"</i></div>\n" + 
             "            </div>\n" +
             "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-clock-o\"></i>&nbsp;截止日期: &nbsp;<span style='font-weight:normal'>"+data[i].date +'&nbsp;' +data[i].time +"</span></div>\n" +
             "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-warning\"></i>&nbsp;剩余时间: &nbsp;<span style='font-weight:normal'>"+day +' 天 ' + h+' 时 ' +m+' 分 ' +"</span></div>\n" +
@@ -606,5 +613,106 @@ function outdateall(){
     renderAllTodo();
 }
 
+function ShowElement(element) {
+    var oldhtml = element.innerHTML;
+    var newobj = document.createElement('input');
+    newobj.type = 'text';
+    newobj.value = oldhtml;
+    //为新增元素添加光标离开事件
+    newobj.onblur = function() {
+        //当触发时设置父节点的双击事件为ShowElement、也可在这里进行保存动作
+        element.setAttribute("ondblclick", "ShowElement(this);");
+        if(this.value==''){
+            element.innerHTML = oldhtml;
+            element.setAttribute("ondblclick", "ShowElement(this);");
+            return;
+        }
+        if(this.value==oldhtml){
+            element.innerHTML = oldhtml;
+            element.setAttribute("ondblclick", "ShowElement(this);");
+            return;
+        }
+        element.innerHTML = this.value;
+        showHint('修改成功！',1);
+        i = element.parentNode.parentNode.id.substr(1);
+        data[i].title = this.value;
+        saveData(data);
+        renderAllTodo();
+    }
+    //设置该标签的子节点为空
+    element.innerHTML = '';
+    //添加该标签的子节点，input对象
+    element.appendChild(newobj);
+    //设置选择文本的内容或设置光标位置（两个参数：start,end；start为开始位置，end为结束位置；如果开始位置和结束位置相同则就是光标位置）
+    newobj.setSelectionRange(0, oldhtml.length);
+    //设置获得光标
+    newobj.focus();
+    //设置父节点的双击事件为空
+    newobj.parentNode.setAttribute("ondblclick", "");
+}
 
+function showDate(element) {
+    var ohtml =element.innerHTML;
+    var oldtext = element.innerText;
+    var oldhtml = element.innerText.substring(8,24);
+    year=oldhtml.substring(0,10);
+    time=oldhtml.substring(11,16)
+    var newobj = document.createElement('input');
+    newobj.type = 'datetime-local';
+    newobj.value = year+'T'+time;
+    newobj.required='required';
+    //为新增元素添加光标离开事件
+    newobj.onblur = function() {
+        element.setAttribute("ondblclick", "showDate(this);");
+        i = element.parentNode.id.substr(1);
+        _year = this.value.substring(0,10);
+        _time = this.value.substring(11,16);
+        console.log(Date.parse((_year+' '+_time).replace(/-/g, '/'))-new Date().getTime())
+        if(Date.parse((_year+' '+_time).replace(/-/g, '/'))-new Date().getTime()<=0){
+            showHint('不能设置过去的时间！',3);
+            element.innerHTML = ohtml;
+            return
+        }
+        if(_year+' '+_time==year+' '+time){
+            element.innerHTML = ohtml;
+            return
+        }
+        showHint("修改成功",1);
+        element.innerHTML = ohtml;
+        console.log(data[i])
+        data[i].date = _year;
+        data[i].time = _time;
+        saveData(data);
+        renderAllTodo();
+    }
+    //设置该标签的子节点为空
+    element.innerHTML = '';
+    //添加该标签的子节点，input对象
+    element.appendChild(newobj);
+    //设置选择文本的内容或设置光标位置（两个参数：start,end；start为开始位置，end为结束位置；如果开始位置和结束位置相同则就是光标位置）
+    //设置获得光标
+    newobj.focus();
+    //设置父节点的双击事件为空
+    newobj.parentNode.setAttribute("ondblclick", "");
+}
 
+function showTag(element){
+    showHint("您成功更改了标签！",1)
+    i = element.parentNode.parentNode.id.substr(1);
+    data[i].tag++;
+    if(data[i].tag>4){
+        data[i].tag-=4;
+    }
+    saveData(data);
+    renderAllTodo(); 
+}
+
+function hidetag(element){
+    showHint("您删除了标签！",1)
+    console.log(element.parentNode.parentNode)
+    i = element.parentNode.parentNode.id.substr(1);
+    console.log(data[i])
+    data[i].tag=0;
+    saveData(data);
+    renderAllTodo(); 
+}

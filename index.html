@@ -47,9 +47,9 @@
     <div class = "input-div">
        <h1 id = "inputtitle" style="font-weight: normal; font-size: 20px;"><i class="fa fa-smile-o"></i> 添加一条事项或纪念时刻</h1>
        <p id="info" style="font-size: 6px; color: rgb(35,103,197);">> 如果您选择了过去的时间，生成一条纪念时刻</br>> 如果您选择了未来的时间，生成一条代办事项</p>
-        <form action="javascript:post_data()" id="form">
+        <form id="form">
             <!-- required规定提交表单之前有必填字段  autocomplete:自动补齐-->
-            <input type="text" id="title" name="title" placeholder="设定一个小目标..." required="required"
+            <input type="text" id="title" name="title" maxlength=8 placeholder="写下您的代办事项或纪念时刻..." required="required"
                 autocomplete="off" />
             <input type="datetime-local" id="datetime"  required="required"/>
             <select id = "tag" required="required">
@@ -59,9 +59,9 @@
                 <option value="3">运动</option>
                 <option value="4">生活</option>
              </select>
-             <button  class = "submit submitBtn"><i class="fa fa-check"></i> 提交</button>
-             <button  class = "submitBtn" style="display: none;" onclick="edit_data(this.id)"><i class="fa fa-check"></i> 完成</button>
         </form>
+        <button  class = "submitBtn" onclick="post_data()"><i class="fa fa-check"></i> 提交</button>
+        <button  class = "submitBtn" style="display: none;" onclick="edit_data(this.id)"><i class="fa fa-check"></i> 完成</button>
     </div>
 
     <div class="first-button" >
@@ -167,7 +167,7 @@
 
     <footer class="footer">
         <p><i class="fa fa-flag" style="margin-top: 0.5cm;"></i> Designer: Li Yuanfeng</br>2021.6</p>
-        <p><div class="github"><a><i class="fa fa-github fa-lg"></i></a></div></p>
+        <p><div class="github"><a href="https://github.com/AiGaoShiBOY"><i class="fa fa-github fa-lg"></i></a></div></p>
         <p style="font-size:14px; color: gray;"><i class="fa fa-envelope"></i> 1852448@tongji.edu.cn<br/> <i class="fa fa-phone"></i> +8618817725936<br/><i class="fa fa-map-marker"></i> 上海, 同济大学</p>
 
 

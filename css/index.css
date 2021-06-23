@@ -366,19 +366,13 @@ select{
 .github{
   height: 37px;
   width: 37px;
-  background-color: rgb(35,103,197);
   color: white;
   margin-left: auto;
   margin-right: auto;
-  border:2px rgb(35,103,197);
   border-radius: 5px;
   text-align: center;
   line-height: 37px;
   font-size: 20px;
-}
-
-.github:hover{
-  background-color:blue;
 }
 
 .emptydiv{
