@@ -44,9 +44,11 @@ Mr.Time采用纯Html+js+css实现，但是这不妨碍Mr.Time功能丰富。为�
 
 Mr.Time的功能也是易于扩展的，localStorage很好地模拟了与数据库的链接。将Js的相应访问data数据更换为与数据库的交互即可。
 
+Mr.Time是针对移动端设计的。您也可以在PC端使用它，但是移动端能获得最佳的布局体验。
+
 ## 功能介绍
 
-**基础功能**
+### 基本功能
 
 - [x] 新增代办事项
 - [x] 删除代办事项
@@ -55,48 +57,39 @@ Mr.Time的功能也是易于扩展的，localStorage很好地模拟了与数据�
 - [x] 删除已完成
 - [x] 保存页面状态，刷新页面后可恢复
 
-**高级功能**
+### 高级功能
 
-- [x] 加入时间系统
-- [ ] 加入标签系统
-- [ ] 加入页面菜单，在菜单中可以过滤当前表项
-- [ ] 加入
-- [x] 双击编辑单条todo
-
-**创意交互**
-
-- [x] 便利贴特效
-  - [x] 长按删除
-  - [x] 左滑 / 右滑删除
-- [x] 浮动小工具球
-  - [x] 拖动自定义位置
-  - [x] 左右翻转
-  - [x] 单击展开小工具
-  - [x] 长按弹出添加todo输入框
-- [x] 聚光灯特效
-- [x] 波浪特效
-
-**其他**
-
-- [x] 适配系统主题 (浅色 / 深色)
-- [x] 适配手机横竖屏
-- [x] 字体大小自适应
-- [x] ios Safari浏览器优化(只通过iPhone11进行测试)
-  - [x] 顶部工具条尺寸优化
-  - [x] hover事件优化
-  - [x] 删除todo手机震动提示(trick可遇不可求)
-
-<br/>
+- [x] 加入时间系统，包括已过期，倒计时等等功能
+- [x] 加入标签系统
+- [x] 加入页面菜单，在菜单中可以过滤当前表项
+- [x] 最紧急提示
+- [x] 加入纪念时刻系统
+- [x] 两种编辑途径：编辑按钮一次性更改代办事项所有属性，双击单个属性改变取值
+- [x] 严格的输入校验系统
+- [x] 菜单、输入单下拉动画
+- [x] 向下滑动的提示条交互
+- [x] 如果没有代办事项/或者纪念时刻，加入贴心的提示
+- [ ] 
 
 ## 功能展示
 
-便利贴展示todo；全部完成；删除已完成；长按完成；小工具过滤器
+### 基本功能
 
-<img src="https://upload-images.jianshu.io/upload_images/12014150-9e3833384f3ecda5.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_3675" width="33%;" /><img src="https://upload-images.jianshu.io/upload_images/12014150-c9b2ae75a3961e9b.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_3676" width="33%;" />
+* 代办事项的增加、删除、展现
 
-浮动球全屏移动；左侧翻转；左滑/右滑todo删除
+<img src="Readme-image/1.png" />
 
-<img src="https://upload-images.jianshu.io/upload_images/12014150-89da8e4fe3929d2f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_3683" width="33%;" /><img src="https://upload-images.jianshu.io/upload_images/12014150-32fe829625e51ba4.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_3680" width="33%;" />
+* 全部已完成、删除已完成、删除已过时
+
+<img src="Readme-image/2.png" />
+
+* 数据持久化已经实现，可以点击链接体验
+
+### 高级功能
+
+* Mr.Time在简单的todo系统上加入了时间系统，用户只需要输入截止日期，就能自动看到剩余时间。如果用户超时，过时的代办事项会自动放入已经过时中，用户不需要手动进行操作。
+
+
 
 双击todo进行编辑
 

@@ -375,7 +375,7 @@ function renderAllTodo(){
             "            <div class=\"todotitle\">"+data[i].title+"</div>\n" +
             "            <div class=\"thetag tag"+data[i].tag+"\">"+taglist[data[i].tag]+"</i></div>\n" +
             "            </div>\n" +
-            "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-clock-o\"></i>&nbsp;完成时间: &nbsp;<span style='font-weight:normal'>"+data[i].date +'&nbsp;' +data[i].time +"</span></div>\n" +
+            "            <div style='margin-left: 5%;font-weight: bold;'><i class=\"fa fa-clock-o\"></i>&nbsp;截止日期: &nbsp;<span style='font-weight:normal'>"+data[i].date +'&nbsp;' +data[i].time +"</span></div>\n" +
             "            <div class=\"firstline\">\n" +
             "                <button class=\"operate-button close\" onclick = 'del(this)' style=\"margin-right:20px;\"><i class=\"fa fa-close fa-lg fa-fw\"></i></button>\n" +
             "            </div>\n" +
