@@ -4,6 +4,8 @@
 
 📦 [View Scource Code](https://github.com/AiGaoShiBOY/AiGaoShiBOY.github.io)
 
+🐒 **Author：** 1852448 李源峰
+
 ## 使用的外部CSS库
 
 🌝 [Font Awesome](http://www.fontawesome.com.cn)
@@ -17,6 +19,7 @@
 * [功能展示](#功能展示)
 * [核心逻辑](#核心逻辑)
 * [开发环境](#开发环境)
+* [苹果设备适应](#苹果设备适应)
 * [项目结构](#项目结构)
 
 ## 项目简介
@@ -130,13 +133,7 @@ Mr.py会在全局维护一个data数组，这个数组代表前端的todolist信
 
 * 对应标签页面的过滤结果，其子元素id分别为'x1','y1','z1','t1'，其中''x,y,z,t"代表事项种类，“1～4”代表标签
 
-  渲染函数`setDom(type,i,string,count)`和过滤函数`showContent(i)`均按照上述对应方式对不同类型的块进行不同操作
-
-<img src="Readme-image/9.png" style="zoom:50%" />
-
-* 完备的输入校验系统。Mr.Time在任何有关输入的地方均会加入全面的表单校验，确保用户正确的输入。Mr.TIme还会在输入中设置一些默认的信息，方便用户使用。
-
-其余交互功能均在对应函数中进行实现，绑定相应的组件事件完成对应功能。
+其余交互功能均在对应函数中进行实现，不同功能对应相应的函数名，绑定相应的组件事件完成对应功能。在此不再赘述，请参阅Index.js。
 
 
 

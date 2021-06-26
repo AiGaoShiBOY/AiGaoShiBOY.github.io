@@ -1,6 +1,4 @@
 
-
-
 //格式化日期时间
 Date.prototype.Format = function (fmt) { 
     var o = {
@@ -19,6 +17,11 @@ Date.prototype.Format = function (fmt) {
       if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
 }
+
+
+/*
+    启动函数，完成第一次页面初始化
+*/
 //页面数据
 var data;
 //当前时间
@@ -27,6 +30,10 @@ renderAllTodo();
 initInput();
 showContent("z")
 
+
+/*
+    初始化输入框
+*/
 function initInput(){
     document.getElementById("inputtitle").innerHTML = "<i class=\"fa fa-smile-o\"></i> 添加一条事项或纪念时刻";
     document.getElementById("info").style.display = "block";
@@ -40,6 +47,9 @@ function initInput(){
 }
 
 
+/*
+    展示导航栏
+*/
 function showContents(){
     document.getElementsByClassName('content-container')[0].style.visibility = 'visible';
     document.getElementsByClassName('content-container')[0].style.opacity = 1;
@@ -49,6 +59,9 @@ function showContents(){
     document.getElementsByClassName("right-item")[0].style.visibility = 'hidden';
 }
 
+/*
+关闭对话框
+*/
 function closeDialog(){
     console.log('1');
     document.getElementsByClassName('content-container')[0].style.visibility = 'hidden';
@@ -82,6 +95,10 @@ function closeInput(){
     document.getElementsByClassName("right-item")[1].style.display='none';
 }
 
+/*
+    展示提示组件
+*/
+
 function showHint(content,type){
     if(type==1){
         txt = "<i class = 'fa fa-check'></i>" +' ' + content;
@@ -102,11 +119,16 @@ function showHint(content,type){
     setTimeout("hideHint()",3000);
 }
 
+
 function hideHint(){
     document.getElementsByClassName("hint")[0].style.height='0px';
     document.getElementsByClassName("hint")[0].style.opacity=0;
     document.getElementsByClassName("hint")[0].style.visibility = "hidden";
 }
+
+/*
+    删除todo
+*/
 
 function del(obj){
     let target = obj.parentNode.parentNode;
@@ -121,6 +143,10 @@ function del(obj){
     renderAllTodo();
 }
 
+/* 
+    完成todo
+*/
+
 function finish(obj){
     let target = obj.parentNode.parentNode;
     index = target.id.substr(1);
@@ -131,6 +157,10 @@ function finish(obj){
     showHint("😄 您完成了一项代办事项！",1)
     renderAllTodo();
 }
+
+/* 
+    编辑todo，首先会修改输入框布局/按钮
+*/
 
 function edit(obj){
     let target = obj.parentNode.parentNode;
@@ -145,6 +175,10 @@ function edit(obj){
     document.getElementsByClassName("submitBtn")[1].id="%"+index;
     showInput();
 } 
+
+/*
+    编辑数据并返回后端
+*/
 
 function edit_data(id){
     i = id.substr(1);
@@ -183,6 +217,10 @@ function edit_data(id){
     showHint("修改成功！",1)
     renderAllTodo();
 }
+
+/*
+    储存数据
+*/
 
 function post_data(){
     //获取名字
@@ -223,7 +261,9 @@ function post_data(){
     renderAllTodo();
 }
 
-//从localStorage获取data
+/*
+    从localStorage获取data
+*/
 function loadData(data_name){
     var collection = localStorage.getItem(data_name);
     if (collection != null) {
@@ -231,18 +271,25 @@ function loadData(data_name){
     } else return [];
 }
 
-//存储数据
+/* 
+    存储数据
+*/
 function saveData(data){
     localStorage.setItem("todo", JSON.stringify(data));
 }
 
-//根据时间排序
+/*
+根据时间排序
+*/
 function sortTime(data){
     data.sort((a,b)=>{
         return Date.parse((a.date+' '+a.time).replace(/-/g, '/'))-Date.parse((b.date+' '+b.time).replace(/-/g, '/'))
     })
 }
 
+/*
+    渲染所有的todo，这相当于页面的刷新函数
+*/
 function renderAllTodo(){
     now = new Date().Format("yyyy-MM-dd");
 
@@ -493,6 +540,9 @@ function renderAllTodo(){
     
 }
 
+/*
+    根据字符串内容渲染dom元素
+*/
 
 function setDom(type,i,string,count){
     document.getElementById(type+i).innerHTML = string;
@@ -518,7 +568,9 @@ function setDom(type,i,string,count){
     }
 }
 
-
+/*
+    改变页面dom元素，实现过滤效果
+*/
 
 function showContent(i){
     var list = document.getElementsByClassName("todo-block");
@@ -548,6 +600,10 @@ function showContent(i){
     closeDialog();
 }
 
+/*
+    完成所有todo
+*/
+
 function finishall(){
     var j = 0;
     for(let i = 0; i<data.length;i++){
@@ -564,6 +620,10 @@ function finishall(){
     showHint("😄 您成功完成了所有事项！",1)
     renderAllTodo();
 }
+
+/*
+    删除所有已完成
+*/
 
 function deleteall(){
     var j = 0;
@@ -589,6 +649,10 @@ function deleteall(){
     renderAllTodo();
 }
 
+/*
+    删除所有已过时
+*/
+
 function outdateall(){
     var j = 0;
     for(let i = 0; i<data.length;i++){
@@ -612,6 +676,11 @@ function outdateall(){
     showHint("成功删除了已过时的事项",1);
     renderAllTodo();
 }
+
+/*
+    双击展示输入框，修改
+*/
+
 
 function ShowElement(element) {
     var oldhtml = element.innerHTML;
@@ -645,6 +714,10 @@ function ShowElement(element) {
     //不能重复点击
     newobj.parentNode.setAttribute("ondblclick", "");
 }
+
+/*
+    双击展示日期输入
+*/
 
 function showDate(element) {
     var ohtml =element.innerHTML;
@@ -689,6 +762,10 @@ function showDate(element) {
     newobj.parentNode.setAttribute("ondblclick", "");
 }
 
+/*
+    双击更改标签
+*/
+
 function showTag(element){
     showHint("您成功更改了标签！",1)
     i = element.parentNode.parentNode.id.substr(1);
@@ -699,6 +776,10 @@ function showTag(element){
     saveData(data);
     renderAllTodo(); 
 }
+
+/*
+    拖动删除标签
+*/
 
 function hidetag(element){
     showHint("您删除了标签！",1)
